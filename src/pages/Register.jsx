@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { publicRequest } from '../requestMethod';
 import React, { useState } from 'react'
 
 const Container = styled.div`
@@ -77,7 +78,7 @@ const Login = () => {
     const handleSubmit= async e=>{
         e.preventDefault();
         try{
-           const res= await axios.post("/auth/register",inputs);
+           const res= await publicRequest.post("/auth/register",inputs);
            console.log(res);
         }catch(err){
             setError(err.response.data);
@@ -94,7 +95,7 @@ const Login = () => {
             <Input required placeholder="Email" name="email" onChange={handleChange}/>
             <Input required type="password" placeholder="Mật khẩu" name="password" onChange={handleChange}/>
             <Button onClick={handleSubmit}>Đăng ký</Button>
-            <Link to={"/register"} style={{ textDecorationLine: "none", color: "black" }}>
+            <Link to={"/login"} style={{ textDecorationLine: "none", color: "black" }}>
                 <Links>
                     Đã có tài khoản?
                 </Links>

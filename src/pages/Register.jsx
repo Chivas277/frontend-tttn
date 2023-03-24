@@ -78,7 +78,7 @@ const Login = () => {
     const handleSubmit= async e=>{
         e.preventDefault();
         try{
-           const res= await publicRequest.post("/auth/register",inputs);
+           const res= await axios.post("http://localhost:8800/api/auth/register",inputs);
            console.log(res);
         }catch(err){
             setError(err.response.data);

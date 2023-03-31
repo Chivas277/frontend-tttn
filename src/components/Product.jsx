@@ -82,7 +82,7 @@ const Product = ({ item }) => {
                     </Link>
                 </Icon>
                 <Icon>
-                    <Link to={`/Product/${item._id}`} style={{ textDecorationLine: "none" }}>
+                    <Link to={`/ProductDetail/${item.id}`} style={{ textDecorationLine: "none" }}>
                         <SearchOutlinedIcon />
                     </Link>
                 </Icon>

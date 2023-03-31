@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import { Link,useNavigate } from 'react-router-dom';
-import { useContext } from "react";
-import { AuthContext } from "../context/authContext";
-
-
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import { publicRequest } from '../requestMethod';
 import React, { useState } from 'react'
 
 const Container = styled.div`
@@ -65,46 +63,40 @@ const Links = styled.a`
 `;
 
 const Login = () => {
+    const [err, setError] = useState(null);
 
-    const [inputs, setInputs] = useState({
-        email: "",
-        password: "",
-      });
-      const [err, setError] = useState(null);
+    const [inputs,setInputs]=useState({
+        username: "",
+        email:"",
+        password:"",
+    })
 
-      const navigate = useNavigate();
-    
-      const { login } = useContext(AuthContext);
+    const handleChange = e => {
+        setInputs(prev=>({...prev,[e.target.name]: e.target.value}))
+    }
 
-      const handleChange = (e) => {
-        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-      };
-    
-      const handleSubmit = async (e) => {
+    const handleSubmit= async e=>{
         e.preventDefault();
-        try {
-          await login(inputs)
-          navigate("/");
-        } catch (err) {
-          setError(err.response.data);
+        try{
+           const res= await axios.post("http://localhost:8800/api/auth/register",inputs);
+           console.log(res);
+        }catch(err){
+            setError(err.response.data);
+            console.log(err);
         }
-      };
+    }
+
   return (
     <Container>
     <Wrapper>
         <Title>Đăng nhập</Title>
         <Form >
-            <Input placeholder="Email" name="email" onChange={handleChange}/>
-            <Input type="password" placeholder="Mật khẩu" name="password" onChange={handleChange}/>
-            <Button onClick={handleSubmit} >Đăng nhập</Button>
-            <Link style={{ textDecorationLine: "none", color: "black" }}>
-                <Links>
-                    Quên mật khẩu?
-                </Links>
-            </Link>
+            <Input required placeholder="Email" name="email" onChange={handleChange}/>
+            <Input required type="password" placeholder="Mật khẩu" name="password" onChange={handleChange}/>
+            <Button onClick={handleSubmit}>Đăng nhập</Button>
             <Link to={"/register"} style={{ textDecorationLine: "none", color: "black" }}>
                 <Links>
-                    Đăng ký tài khoản mới?
+                    Chưa có tài khoản?
                 </Links>
             </Link>
         </Form>

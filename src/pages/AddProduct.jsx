@@ -56,9 +56,9 @@ const AddProduct = () => {
     const handleClick = async e =>{
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8800/api/products/addproduct",product);
-            navigate("/");
-            console.log(product);
+           const res= await axios.post("http://localhost:8800/api/products/addproduct",product);
+            //navigate("/");
+            console.log(res);
         } catch (err) {
             console.log(err);
         }
@@ -100,17 +100,17 @@ const AddProduct = () => {
         <Input type="text" placeholder="Hình ảnh" name='img' onChange={handleChange}/>
         <Input type="text" placeholder="Số lượng" name='quantity' onChange={handleChange}/>
 
-        <Select type="text" placeholder="Loại" name=' cate_id' onChange={handleChange}>
+        <Select type="text" placeholder="Loại" name='cate_id' onChange={handleChange}>
             <Option disabled selected>Loại</Option>
             {cate.map((item)=>(
-                <Option>{item.title}</Option>             
+                <Option value="id">{item.title}</Option>             
             ))}
         </Select>
 
         <Select name='sup_id' onChange={handleChange}>
             <Option disabled selected>Nhà cung cấp</Option>
             {sup.map((item)=>(
-                <Option>{item.title}</Option>             
+                <Option value="id">{item.title}</Option>             
             ))}
         </Select>
         <Button onClick={handleClick}>Thêm</Button>

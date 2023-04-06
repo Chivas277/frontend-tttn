@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, { useState,useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { publicRequest } from '../requestMethod'
 
 const Container = styled.div`
     flex: 6;
@@ -45,7 +44,7 @@ const AddProduct = () => {
         sup_id:"",
     });
 
-    const navigate= useNavigate();
+    //const navigate= useNavigate();
     const [cate,setCate] = useState([]);
     const [sup,setSup] = useState([]);
 

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { publicRequest } from '../requestMethod';
 import React, { useState } from 'react'
+import { useContext } from 'react';
+import { AuthContext } from '../context/authContext';
 
 const Container = styled.div`
     width: 100vw;
@@ -62,14 +64,19 @@ const Links = styled.a`
     
 `;
 
+const Error = styled.p`
+    color: red;
+`
+
 const Login = () => {
     const [err, setError] = useState(null);
 
     const [inputs,setInputs]=useState({
-        username: "",
         email:"",
         password:"",
     })
+    const navigate = useNavigate();
+    const {login}=useContext(AuthContext);
 
     const handleChange = e => {
         setInputs(prev=>({...prev,[e.target.name]: e.target.value}))
@@ -78,8 +85,9 @@ const Login = () => {
     const handleSubmit= async e=>{
         e.preventDefault();
         try{
-           const res= await axios.post("http://localhost:8800/api/auth/register",inputs);
-           console.log(res);
+            await login(inputs)
+            navigate("/productlist");
+           //console.log(res);
         }catch(err){
             setError(err.response.data);
             console.log(err);
@@ -94,6 +102,9 @@ const Login = () => {
             <Input required placeholder="Email" name="email" onChange={handleChange}/>
             <Input required type="password" placeholder="Mật khẩu" name="password" onChange={handleChange}/>
             <Button onClick={handleSubmit}>Đăng nhập</Button>
+            {
+                err && <Error>{err}</Error>
+            }
             <Link to={"/register"} style={{ textDecorationLine: "none", color: "black" }}>
                 <Links>
                     Chưa có tài khoản?

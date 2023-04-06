@@ -47,6 +47,7 @@ const Title = styled.h1`
 
 const Desc = styled.p`
     margin: 20px 0px;
+    font-size: 2em;
 `;
 
 const Price = styled.span`
@@ -95,6 +96,7 @@ const AddContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 1em;
 `;
 
 const AmountContainer = styled.div`
@@ -155,8 +157,8 @@ const Product = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             try {
-                const res = await axios.get("http://localhost:8800/api/products/getproductid");
-                setProducts(res.data);
+                const res = await axios.get("http://localhost:8800/api/products/"+id);
+                setProducts(res.data[0]);
                 console.log(res);
             } catch (err) {
                 console.log(err);
@@ -190,7 +192,7 @@ const Product = () => {
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product.title}</Title>
-                    <Desc>{product.desc}</Desc>
+                    <Desc>{product.description}</Desc>
                     <Price>{product.price} VNĐ</Price>
 
                     <AddContainer>

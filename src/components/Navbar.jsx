@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
 import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from '@mui/material';
@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 //import { logOut } from '../redux/apiRequest';
 //import { createAxios } from "../../src/createInstance";
 //import { logoutSuccess } from '../redux/authSlice';
-//import { useSelector } from "react-redux";
+import { AuthContext } from '../context/authContext';
 
 const Container = styled.div`
     height: 5em;
@@ -74,8 +74,7 @@ const LoginName = styled.span`
 `;
 
 const Navbar = () => {
-   // const user = useSelector((state) => state.auth.login?.currentUser);
-
+    //const user = useSelector((state) => state.auth.login?.currentUser);
     //const dispatch = useDispatch();
     //const navigate = useNavigate();
     //const accessToken = user?.accessToken;
@@ -88,6 +87,9 @@ const Navbar = () => {
 
     // const quantity = useSelector(state => state.cart.quantity)
     // console.log(quantity)
+
+    const {currentUser,logout} = useContext(AuthContext);
+    
 
 
 
@@ -109,21 +111,25 @@ const Navbar = () => {
                 <Right>
 
 
-                  
-                      
-                            <MenuItem> <LoginName>Hi, </LoginName></MenuItem>
-                            <MenuItem > <Link >Đăng xuất</Link></MenuItem>
-                  
-                            <MenuItem>
-                                <Link to={"/register"} style={{ textDecorationLine: "none" }}>
-                                    Đăng ký
-                                </Link>
-                            </MenuItem>
-                            <MenuItem>
-                                <Link to={"/login"} style={{ textDecorationLine: "none" }} >
-                                    Đăng nhập
-                                </Link>
-                            </MenuItem>
+                {currentUser  ? (
+                    <>
+                        <MenuItem> <LoginName>Hi, {currentUser?.username} </LoginName></MenuItem>
+                        <MenuItem onClick={logout}> <Link style={{ textDecorationLine: "none" }}>Đăng xuất</Link></MenuItem>
+                    </>
+                ) : (
+                    <>  
+                        <MenuItem>
+                            <Link to={"/register"} style={{ textDecorationLine: "none" }}>
+                                Đăng ký
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to={"/login"} style={{ textDecorationLine: "none" }} >
+                                Đăng nhập
+                            </Link>
+                        </MenuItem>
+                    </>
+                )}
                   
                     <Link to={"/cart"} style={{ textDecorationLine: "none" }} >
                         <MenuItem>

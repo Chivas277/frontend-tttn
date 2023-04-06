@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { publicRequest } from '../requestMethod';
 import React, { useState } from 'react'
@@ -62,8 +62,13 @@ const Links = styled.a`
     
 `;
 
+const Error = styled.p`
+    color: red;
+`
+
 const Login = () => {
     const [err, setError] = useState(null);
+    const navigate = useNavigate();
 
     const [inputs,setInputs]=useState({
         username: "",
@@ -80,6 +85,7 @@ const Login = () => {
         try{
            const res= await axios.post("http://localhost:8800/api/auth/register",inputs);
            console.log(res);
+            navigate("/login");
         }catch(err){
             setError(err.response.data);
             console.log(err);
@@ -95,6 +101,9 @@ const Login = () => {
             <Input required placeholder="Email" name="email" onChange={handleChange}/>
             <Input required type="password" placeholder="Mật khẩu" name="password" onChange={handleChange}/>
             <Button onClick={handleSubmit}>Đăng ký</Button>
+            {
+                err && <Error>{err}</Error>
+            }
             <Link to={"/login"} style={{ textDecorationLine: "none", color: "black" }}>
                 <Links>
                     Đã có tài khoản?

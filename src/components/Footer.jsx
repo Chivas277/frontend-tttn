@@ -84,8 +84,8 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>Đồ án chuyên ngành</Logo>
-                <Desc>Tỉa Hứa Hoàng Vũ</Desc>
+                <Logo>Đồ án TTTN</Logo>
+                <Desc>Tỉa Hứa Hoàng Vũ - DH51902793</Desc>
 
                 <SocialContainer>
                     <a href="https://www.facebook.com/Chivas2707">
@@ -96,7 +96,7 @@ const Footer = () => {
                     <SocialIcon color="E4405F">
                         <InstagramIcon />
                     </SocialIcon>
-                    <a href="https://github.com/Chivas277/flower-garden">
+                    <a href="https://github.com/Chivas277/frontend-tttn">
                         <SocialIcon color="000000">
                             <GitHubIcon />
                         </SocialIcon>
@@ -113,8 +113,8 @@ const Footer = () => {
                         <ListItem>Giỏ hàng</ListItem>
                     </Link>
                     <Link to={"/products"} style={{ textDecoration: "none", color: "black" }}>
-                        <ListItem>Asus</ListItem>
-                        <ListItem>Aorus</ListItem>
+                        <ListItem value="id">Asus</ListItem>
+                        <ListItem >Aorus</ListItem>
                     </Link>
                 </List>
             </Center>

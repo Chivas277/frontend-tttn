@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React,{useEffect, useState} from 'react'
-import { publicRequest } from '../requestMethod.js';
 import Products from "../components/Products";
 import Announcement from '../components/Announcement';
 import styled from 'styled-components';

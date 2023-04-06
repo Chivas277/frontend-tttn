@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { publicRequest } from '../requestMethod';
 import React, { useState } from 'react'
 
 const Container = styled.div`

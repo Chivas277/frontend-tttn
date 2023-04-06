@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import Product from './Product.jsx';
+import ProductScreen from '../ProductScreen/ProductScreen.jsx';
 import axios from 'axios';
 
 
@@ -11,7 +11,7 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const Products = ({ title, filters, sort }) => {
+const ProductScreens = ({ title, filters, sort }) => {
 
     //console.log(cat,filters,sort);
 
@@ -82,14 +82,14 @@ const Products = ({ title, filters, sort }) => {
         <Container>
             {title
                 ? filteredProducts.map((item) => (
-                    <Product item={item} key={item.id} />
+                    <ProductScreen item={item} key={item.id} />
                 )) : products
                     .slice(0, 8)
                     .map((item) =>
-                        <Product item={item} key={item.id} />
+                        <ProductScreen item={item} key={item.id} />
                     )}
         </Container>
     )
 }
 
-export default Products
+export default ProductScreens

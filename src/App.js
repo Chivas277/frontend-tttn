@@ -10,6 +10,8 @@ import AddProduct from "./pages/AddProduct";
 import ProductDetail from "./pages/Product";
 import AddCate from "./pages/AddCategories";
 import AddSupplier from "./pages/AddSupplier";
+import ProductScreen from "./pages/ProductScreen";
+import EditProduct from "./pages/EditProduct"
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
   {
     path: "/addsup",
     element: <AddSupplier/>,
+  },
+  {
+    path:"/productscreen",
+    element:<ProductScreen/>
+  },
+  {
+    path:"/editproduct/:id",
+    element:<EditProduct/>
   }
 ]);
 

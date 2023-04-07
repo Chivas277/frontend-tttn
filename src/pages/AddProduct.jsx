@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState,useEffect } from 'react'
-//import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -44,7 +44,7 @@ const AddProduct = () => {
         sup_id:"",
     });
 
-    //const navigate= useNavigate();
+    const navigate= useNavigate();
     const [cate,setCate] = useState([]);
     const [sup,setSup] = useState([]);
 
@@ -55,9 +55,9 @@ const AddProduct = () => {
     const handleClick = async e =>{
         e.preventDefault();
         try {
-           const res= await axios.post("http://localhost:8800/api/products/addproduct",product);
-            //navigate("/");
-            console.log(res);
+            await axios.post("http://localhost:8800/api/products/addproduct",product);
+            window.confirm("Thêm thành công");
+            navigate("/productlist");
         } catch (err) {
             console.log(err);
         }

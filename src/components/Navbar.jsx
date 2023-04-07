@@ -115,6 +115,15 @@ const Navbar = () => {
                     <>
                         <MenuItem> <LoginName>Hi, {currentUser?.username} </LoginName></MenuItem>
                         <MenuItem onClick={logout}> <Link style={{ textDecorationLine: "none" }}>Đăng xuất</Link></MenuItem>
+                        <MenuItem>
+                            <Link to={"/productscreen"} style={{ textDecorationLine: "none" }}>Quản lý sản phẩm</Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to={"/productscreen"} style={{ textDecorationLine: "none" }}>Quản lý danh mục</Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to={"/productscreen"} style={{ textDecorationLine: "none" }}>Quản lý nhà cung cấp</Link>
+                        </MenuItem>
                     </>
                 ) : (
                     <>  

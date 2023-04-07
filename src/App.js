@@ -12,6 +12,7 @@ import AddCate from "./pages/AddCategories";
 import AddSupplier from "./pages/AddSupplier";
 import ProductScreen from "./pages/ProductScreen";
 import EditProduct from "./pages/EditProduct"
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path:"/editproduct/:id",
     element:<EditProduct/>
+  },
+  {
+    path:"/cart",
+    element:<Cart/>
   }
 ]);
 

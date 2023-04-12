@@ -10,9 +10,14 @@ import AddProduct from "./pages/AddProduct";
 import ProductDetail from "./pages/Product";
 import AddCate from "./pages/AddCategories";
 import AddSupplier from "./pages/AddSupplier";
-import ProductScreen from "./pages/ProductScreen";
+import ProductScreen from "./pages/ScreenProduct";
 import EditProduct from "./pages/EditProduct"
 import Cart from "./pages/Cart";
+import CateScreen from "./pages/ScreenCategories";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SupScreen from "./pages/ScreenSupplier";
 
 const router = createBrowserRouter([
   {
@@ -62,12 +67,21 @@ const router = createBrowserRouter([
   {
     path:"/cart",
     element:<Cart/>
+  },
+  {
+    path:"/catescreen",
+    element:<CateScreen/>
+  },
+  {
+    path:"/supscreen",
+    element:<SupScreen/>
   }
 ]);
 
 function App() {
   return (
     <div >
+      <ToastContainer position="bottom-center" limit={1} />
       <RouterProvider router={router}/>
     </div>
   );

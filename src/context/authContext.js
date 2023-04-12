@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import {toast} from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -16,6 +17,7 @@ export const AuthContexProvider = ({ children }) => {
   const logout = async (inputs) => {
     await axios.post("http://localhost:8800/api/auth/logout");
     setCurrentUser(null);
+    toast.success("Đăng xuất thành công")
   };
 
   useEffect(() => {

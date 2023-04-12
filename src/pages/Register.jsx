@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
 const Container = styled.div`
     width: 100vw;
@@ -83,8 +84,9 @@ const Login = () => {
         e.preventDefault();
         try{
            const res= await axios.post("http://localhost:8800/api/auth/register",inputs);
-           console.log(res);
+           //console.log(res);
             navigate("/login");
+            toast.success("Đăng ký thành công")
         }catch(err){
             setError(err.response.data);
             console.log(err);

@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import Footer from '../components/Footer'
+import Navbar from '../components/Navbar'
 
 const Container = styled.div`
     flex: 6;
@@ -10,6 +12,11 @@ const Title = styled.h1`
     margin-left: 20em;
 
 `
+
+const Center = styled.div`
+    height: 32em;
+`
+
 const Input = styled.input`
     display: flex;
     width: 30em;
@@ -49,10 +56,14 @@ const AddSupplier = () => {
 
     return (
     <Container>
+        <Navbar/>
         <Title>Thêm nhà cung cấp sản phẩm</Title>
-        <Input type="text" placeholder="Mã nhà cung cấp" name='id' onChange={handleChange}/>
-        <Input type="text" placeholder="Tên nhà cung cấp" name='title' onChange={handleChange} />
-        <Button onClick={handleClick}>Thêm</Button>
+        <Center>
+            <Input type="text" placeholder="Mã nhà cung cấp" name='id' onChange={handleChange}/>
+            <Input type="text" placeholder="Tên nhà cung cấp" name='title' onChange={handleChange} />
+            <Button onClick={handleClick}>Thêm</Button>
+        </Center>
+        <Footer/>
     </Container>
       
   )

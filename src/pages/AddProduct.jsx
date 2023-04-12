@@ -1,10 +1,18 @@
 import axios from 'axios'
 import React, { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import styled from 'styled-components'
+import Navbar from '../components/Navbar'
+import Footer from "../components/Footer"
 
 const Container = styled.div`
     flex: 6;
+    
+`
+
+const Center = styled.div`
+   
 `
 const Title = styled.h1`
     margin-left: 20em;
@@ -55,9 +63,10 @@ const AddProduct = () => {
     const handleClick = async e =>{
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8800/api/products/addproduct",product);
-            window.confirm("Thêm thành công");
-            navigate("/productlist");
+                await axios.post("http://localhost:8800/api/products/addproduct",product);
+                //window.confirm("Thêm thành công");
+                toast.success("Thêm sản phẩm thành công")
+                navigate("/productlist");              
         } catch (err) {
             console.log(err);
         }
@@ -91,6 +100,8 @@ const AddProduct = () => {
 
     return (
     <Container>
+        <Navbar/>
+        <Center>
         <Title>Thêm sản phẩm</Title>
         <Input type="text" placeholder="Mã sản phẩm" name='id' onChange={handleChange}/>
         <Input type="text" placeholder="Tên sản phẩm" name='title' onChange={handleChange} />
@@ -113,6 +124,8 @@ const AddProduct = () => {
             ))}
         </Select>
         <Button onClick={handleClick}>Thêm</Button>
+        <Footer/>
+        </Center>
     </Container>
       
   )

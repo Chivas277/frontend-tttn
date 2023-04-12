@@ -5,6 +5,13 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar"
 
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 
@@ -151,42 +158,50 @@ const Button = styled.button`
 `;
 
 
+function formatCash(str) {
+    return str.split('').reverse().reduce((prev, next, index) => {
+        return ((index % 3) ? next : (next + '.')) + prev
+    })
+}
+
 const Cart = () => {
 
-    // const cart = useSelector((state) => state.cart);
-    // const [stripeToken, setStripeToken] = useState(null);
-    // const navigate = useNavigate();
-    // const [quantity, setQuantity] = useState(1);
+     const cart = useSelector((state) => state.cart);
+     const [stripeToken, setStripeToken] = useState(null);
+     const navigate = useNavigate();
+     const [quantity, setQuantity] = useState(1);
 
-    // const onToken = (token) => {
-    //     setStripeToken(token);
-    // };
+     const onToken = (token) => {
+         setStripeToken(token);
+     };
 
-    // useEffect(() => {
-    //     const makeRequest = async () => {
-    //         try {
-    //             const res = await userRequest.post("/checkout/payment", {
-    //                 tokenId: stripeToken.id,
-    //                 amount: cart.total * 100,
-    //             });
-    //             navigate.push("/success", {
-    //                 stripeData: res.data,
-    //                 products: cart,
-    //             });
-    //         } catch { }
-    //     };
-    //     stripeToken && makeRequest();
-    // }, [stripeToken, cart.total, navigate, cart]);
-    //console.log(stripeToken);
+    useEffect(() => {
+        const makeRequest = async () => {
+            try {
+                const res = await axios.post("http://localhost:8800/api/checkout/payment", {
+                    tokenId: stripeToken.id,
+                    amount: cart.total * 100,
+                });
+                navigate.push("/success", {
+                    stripeData: res.data,
+                    products: cart,
+                });
+            } catch { }
+        };
+        stripeToken && makeRequest();
+    }, [stripeToken, cart.total, navigate, cart]);
+    console.log(stripeToken);
 
 
-    // const handleQuantity = (type) => {
-    //     if (type === "dec") {
-    //         quantity > 1 && setQuantity(quantity - 1);
-    //     } else {
-    //         setQuantity(quantity + 1);
-    //     }
-    // }
+
+
+    const handleQuantity = (type) => {
+        if (type === "dec") {
+            quantity > 1 && setQuantity(quantity - 1);
+        } else {
+            setQuantity(quantity + 1);
+        }
+    }
 
     return (
         <Container>
@@ -198,29 +213,40 @@ const Cart = () => {
                     <Link to={"/productlist"}>
                         <TopButton>Tiếp tục mua sắm</TopButton>
                     </Link>
-                    
+                    <StripeCheckout
+                        name="Smart"
+                        image="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/332679883_5860267560720599_4928285116731219443_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Zou2ZntJBlwAX8U1vNw&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfDnWrU6H6KONt84fMBDkGp3SiKacyU0d0U6QxSaEHhwvQ&oe=643B9290"
+                        billingAddress
+                        shippingAddress
+                        description={`Số tiền bạn cần thanh toán là $${cart.total *quantity}`}
+                        amount={cart.total * 100}
+                        token={onToken}
+                        stripeKey={KEY}
+                    >
                         <TopButton type="filled">Thanh toán ngay</TopButton>
+                    </StripeCheckout>
                 </Top>
                 <Bottom>
-                    <Info>
-                        
-                            <Product>
+                    <Info>                       
+                            { cart.products.map(product=>(
+
+                             <Product>
                                 <ProductDetail>
-                                    <Image  />
+                                    <Image  src={product.img}/>
                                     <Details>
-                                        <ProductName><b>Tên sản phẩm:</b> </ProductName>
-                                        {/* <ProductID><b>Mã:</b>123</ProductID> 
-                                        <ProductColor color={product.color} />*/}
+                                        <ProductName><b>Tên sản phẩm:</b> {product.title} </ProductName>
                                     </Details>
                                 </ProductDetail>
                                 <PriceDetail>
                                     <ProductAmountContainer>
-                                        <ProductAmount></ProductAmount>
+                                        <RemoveIcon onClick={() => handleQuantity("dec")} />
+                                        <ProductAmount>{product.quantity}</ProductAmount>
+                                        <AddIcon onClick={() => handleQuantity("inc")} />
                                     </ProductAmountContainer>
-                                    <ProductPrice> VNĐ</ProductPrice>
+                                    <ProductPrice>{(product.price*product.quantity)} VNĐ</ProductPrice>
                                 </PriceDetail>
                             </Product>
-                       
+                            ))}
                         <Hr />
 
                     </Info>
@@ -229,20 +255,25 @@ const Cart = () => {
 
                         <SummaryItem>
                             <SummaryItemText>Tổng tiền: </SummaryItemText>
-                            <SummaryItemPrice> VNĐ</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total * quantity} VNĐ</SummaryItemPrice>
                         </SummaryItem>
-
-                        {/* <SummaryItem>
-                            <SummaryItemText>Giảm: </SummaryItemText>
-                            <SummaryItemPrice>$30</SummaryItemPrice>
-                        </SummaryItem> */}
                         <SummaryItem type="total">
                             <SummaryItemText >Cần thanh toán: </SummaryItemText>
-                            <SummaryItemPrice>VNĐ</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total* quantity} VNĐ</SummaryItemPrice>
                         </SummaryItem>
-
+                        <StripeCheckout
+                            name="Smart"
+                            image="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/332679883_5860267560720599_4928285116731219443_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Zou2ZntJBlwAX8U1vNw&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfDnWrU6H6KONt84fMBDkGp3SiKacyU0d0U6QxSaEHhwvQ&oe=643B9290"
+                            billingAddress
+                            shippingAddress
+                            description={`Số tiền bạn cần thanh toán là $${cart.total *quantity}`}
+                            amount={cart.total * 100}
+                            token={onToken}
+                            stripeKey={KEY}
+                        >
                             <Button>Thanh toán ngay</Button>
-                    </Summary>
+                        </StripeCheckout>
+                            </Summary>
                 </Bottom>
             </Wrapper>
             <Footer />

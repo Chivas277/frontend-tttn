@@ -9,11 +9,14 @@ import Navbar from './../components/Navbar';
 import { useLocation } from "react-router-dom";
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import { addProduct } from '../redux/cartRedux';
 //import { publicRequest } from '../requestMethod';
 //import { addProduct } from '../redux/cartRedux';
-//import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //import CSKH from './../components/CSKH';
 //import { mobile } from '../Responsive';
+
+import {toast} from "react-toastify";
 
 
 
@@ -140,7 +143,7 @@ const Product = () => {
     // const [color, setColor] = useState("");
     // const [size, setSize] = useState("");
 
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     // useEffect(() => {
     //     const getProduct = async () => {
@@ -175,6 +178,13 @@ const Product = () => {
         }
     }
 
+    const handleClick = ()=>{
+        dispatch(
+            addProduct({ ...product, quantity})
+        );
+        toast.success("Đã thêm sản phẩm vào giỏ hàng")
+    }
+
     // const handleClick = () => {
     //     //update cart
     //     dispatch(
@@ -206,7 +216,7 @@ const Product = () => {
                             <Amount>{quantity}</Amount>
                             <AddIcon onClick={() => handleQuantity("inc")} />
                         </AmountContainer>
-                        <Button >Thêm vô giỏ hàng</Button>
+                        <Button onClick={handleClick}>Thêm vô giỏ hàng</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

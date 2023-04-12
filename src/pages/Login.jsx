@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from 'react'
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
+import {toast} from "react-toastify";
 
 const Container = styled.div`
     width: 100vw;
@@ -17,6 +18,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;    
 `;
+
 
 const Wrapper = styled.div`
     width: 25%;
@@ -81,15 +83,21 @@ const Login = () => {
         setInputs(prev=>({...prev,[e.target.name]: e.target.value}))
     }
 
+
     const handleSubmit= async e=>{
         e.preventDefault();
         try{
             await login(inputs)
+            //window.confirm("Đăng nhập thành công")
+            
+            
+            toast.success("Đăng nhập thành công");
             navigate("/productlist");
            //console.log(res);
         }catch(err){
             setError(err.response.data);
-            console.log(err);
+            toast.error(err);
+            //console.log(err);
         }
     }
 

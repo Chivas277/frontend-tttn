@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Badge } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link, useNavigate } from "react-router-dom";
-//import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 //import { logOut } from '../redux/apiRequest';
 //import { createAxios } from "../../src/createInstance";
 //import { logoutSuccess } from '../redux/authSlice';
@@ -85,9 +85,11 @@ const Navbar = () => {
     //     logOut(dispatch, navigate, id, accessToken, axiosJWT);
     // }
 
-    // const quantity = useSelector(state => state.cart.quantity)
+     const quantity = useSelector(state => state.cart.quantity)
     // console.log(quantity)
+    const cart = useSelector(state=>state.cart)
 
+    console.log(cart);
     const {currentUser,logout} = useContext(AuthContext);
     
 
@@ -119,10 +121,10 @@ const Navbar = () => {
                             <Link to={"/productscreen"} style={{ textDecorationLine: "none" }}>Quản lý sản phẩm</Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link to={"/productscreen"} style={{ textDecorationLine: "none" }}>Quản lý danh mục</Link>
+                            <Link to={"/catescreen"} style={{ textDecorationLine: "none" }}>Quản lý danh mục</Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link to={"/productscreen"} style={{ textDecorationLine: "none" }}>Quản lý nhà cung cấp</Link>
+                            <Link to={"/supscreen"} style={{ textDecorationLine: "none" }}>Quản lý nhà cung cấp</Link>
                         </MenuItem>
                     </>
                 ) : (
@@ -142,7 +144,7 @@ const Navbar = () => {
                   
                     <Link to={"/cart"} style={{ textDecorationLine: "none" }} >
                         <MenuItem>
-                            <Badge color="primary">
+                            <Badge badgeContent={quantity} color="primary">
                                 <ShoppingCartOutlinedIcon />
                             </Badge>
                         </MenuItem>
@@ -150,6 +152,8 @@ const Navbar = () => {
                 </Right>
             </Wrapper>
         </Container>
+
+        
     )
 }
 

@@ -193,10 +193,9 @@ const Product = () => {
     // };
 
     function formatCash(str) {
-        return str.split('').reverse().reduce((prev, next, index) => {
-            return ((index % 3) ? next : (next + '.')) + prev
-        })
-    }
+    return str.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    
+}
     return (
         <Container>
             <Navbar />
@@ -208,7 +207,7 @@ const Product = () => {
                 <InfoContainer>
                     <Title>{product.title}</Title>
                     <Desc>{product.description}</Desc>
-                    <Price>{product.price} VNĐ</Price>
+                    <Price>{(product.price)} VNĐ</Price>
 
                     <AddContainer>
                         <AmountContainer>

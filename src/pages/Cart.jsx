@@ -159,9 +159,8 @@ const Button = styled.button`
 
 
 function formatCash(str) {
-    return str.split('').reverse().reduce((prev, next, index) => {
-        return ((index % 3) ? next : (next + '.')) + prev
-    })
+    return str.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    
 }
 
 const Cart = () => {
@@ -243,7 +242,7 @@ const Cart = () => {
                                         <ProductAmount>{product.quantity}</ProductAmount>
                                         <AddIcon onClick={() => handleQuantity("inc")} />
                                     </ProductAmountContainer>
-                                    <ProductPrice>{(product.price*product.quantity)} VNĐ</ProductPrice>
+                                    <ProductPrice>{formatCash(product.price*product.quantity)}</ProductPrice>
                                 </PriceDetail>
                             </Product>
                             ))}
@@ -255,18 +254,18 @@ const Cart = () => {
 
                         <SummaryItem>
                             <SummaryItemText>Tổng tiền: </SummaryItemText>
-                            <SummaryItemPrice>{cart.total * quantity} VNĐ</SummaryItemPrice>
+                            <SummaryItemPrice>{formatCash(cart.total * quantity)} </SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText >Cần thanh toán: </SummaryItemText>
-                            <SummaryItemPrice>{cart.total* quantity} VNĐ</SummaryItemPrice>
+                            <SummaryItemPrice>{formatCash(cart.total* quantity)} </SummaryItemPrice>
                         </SummaryItem>
                         <StripeCheckout
                             name="Smart"
                             image="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/332679883_5860267560720599_4928285116731219443_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Zou2ZntJBlwAX8U1vNw&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfDnWrU6H6KONt84fMBDkGp3SiKacyU0d0U6QxSaEHhwvQ&oe=643B9290"
                             billingAddress
                             shippingAddress
-                            description={`Số tiền bạn cần thanh toán là $${cart.total *quantity}`}
+                            description={`Số tiền bạn cần thanh toán là $${formatCash(cart.total *quantity)}`}
                             amount={cart.total * 100}
                             token={onToken}
                             stripeKey={KEY}
